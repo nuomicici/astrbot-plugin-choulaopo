@@ -312,7 +312,4 @@ class RandomWifePlugin(Star):
             self._save_records()
             logger.info("抽老婆插件资源已清理完毕")
         except Exception as e:
-            logger.error(f"插件终止时出现错误: {e}")ds()
-            logger.info("抽老婆插件资源已清理完毕")
-        except Exception as e:
             logger.error(f"插件终止时出现错误: {e}")
