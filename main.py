@@ -113,13 +113,13 @@ class RandomWifePlugin(Star):
         logger.info(f"用户{user_id}在群{group_id}抽取了{wife_name}({wife_id})")
     
     # 处理“今日老婆”和“抽老婆”命令，调用通用抽取方法并启用@功能
-    @filter.command("今日老婆", "抽老婆")
+    @filter.command("今日老婆", alias={'抽老婆')
     async def draw_wife_with_at(self, event: AstrMessageEvent):
         async for result in self._draw_wife_common(event, with_at=True):
             yield result
     
     # 处理“抽老婆-@”和“今日老婆-@”命令，调用通用抽取方法并禁用@功能
-    @filter.command("抽老婆-@", "今日老婆-@")
+    @filter.command("抽老婆-@", alias={'今日老婆-@'})
     async def draw_wife_without_at(self, event: AstrMessageEvent):
         async for result in self._draw_wife_common(event, with_at=False):
             yield result
