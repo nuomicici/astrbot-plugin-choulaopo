@@ -12,7 +12,7 @@ from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import Aioc
 import astrbot.api.message_components as Comp
 
 # 根据官方文档：开发者必须使用@register装饰器来注册插件，这是AstrBot识别和加载插件的必要条件
-@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v1.3.0", "https://github.com/astrbot-plugin-choulaopo")
+@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v1.3.1", "https://github.com/astrbot-plugin-choulaopo")
 class RandomWifePlugin(Star):
     """
     AstrBot随机抽老婆插件
@@ -27,13 +27,14 @@ class RandomWifePlugin(Star):
     8. 输出被抽中成员的头像
     """
     
-    def __init__(self, context: Context, config: AstrBotConfig):
+    def __init__(self, context: Context):
         """
         插件初始化方法
-        根据官方文档：在__init__方法中会传入Context对象和config对象
+        根据官方文档：在__init__方法中会传入Context对象
         """
         super().__init__(context)
-        self.config = config  # 根据官方文档：AstrBotConfig继承自Dict，拥有字典的所有方法
+        # 核心修正：配置对象是从 context 中获取的，而不是直接注入到 __init__
+        self.config: AstrBotConfig = context.config
         
         # 根据官方文档插件开发原则：持久化数据请存储于data目录下，而非插件自身目录
         self.data_dir = os.path.join("data", "plugins", "random_wife")
@@ -173,28 +174,23 @@ class RandomWifePlugin(Star):
             yield event.plain_result("无法获取群组信息")
             return
         
-        # 修改：从配置文件读取每日限制次数，如果未配置则默认为3
         daily_limit = self.config.get("daily_limit", 3)
         
-        # 检查今日抽取次数
         today_count = self._get_today_count(group_id, user_id)
         if today_count >= daily_limit:
             yield event.plain_result(f"你今天已经抽了{today_count}次老婆了，明天再来吧！")
             return
         
-        # 获取群成员列表
         members = await self._get_group_members(event)
         
         if not members:
             yield event.plain_result("暂时无法获取群成员列表，请确保Bot有相应权限，或当前平台不支持此功能")
             return
         
-        # 修改：从配置文件读取排除用户列表
         excluded = set(str(uid) for uid in self.config.get("excluded_users", []))
-        excluded.add(str(bot_id))  # 排除Bot自身
-        excluded.add(str(user_id)) # 排除发起者自己
+        excluded.add(str(bot_id))
+        excluded.add(str(user_id))
         
-        # 过滤成员
         available_members = [
             member for member in members 
             if str(member.get("user_id", "")) not in excluded
@@ -204,28 +200,22 @@ class RandomWifePlugin(Star):
             yield event.plain_result("群里没有可以抽取的成员哦~")
             return
         
-        # 随机抽取一个群友
         wife = random.choice(available_members)
         wife_id = wife.get("user_id")
         wife_name = wife.get("card") or wife.get("nickname") or f"用户{wife_id}"
         
-        # 记录抽取结果
         self._add_record(group_id, user_id, str(wife_id), wife_name, with_at)
         
-        # 新增：构造头像URL
         avatar_url = f"https://q4.qlogo.cn/headimg_dl?dst_uin={wife_id}&spec=640"
         
-        # 修改：统一使用消息链来发送消息，以便包含图片
         remaining = daily_limit - today_count - 1
         
-        # 构建基础消息链
         chain = [
             Comp.At(qq=user_id),
             Comp.Plain(" 你的今日老婆是：\n"),
             Comp.Image.fromURL(avatar_url)
         ]
 
-        # 根据 with_at 参数决定是否@被抽中的人
         if with_at:
             chain.extend([
                 Comp.Plain("\n"),
@@ -235,10 +225,8 @@ class RandomWifePlugin(Star):
         else:
             chain.append(Comp.Plain(f"\n{wife_name}"))
 
-        # 添加剩余次数提示
         chain.append(Comp.Plain(f"\n剩余抽取次数：{remaining}次"))
 
-        # 发送消息链
         yield event.chain_result(chain)
     
     @filter.command("我的老婆", "抽取历史")
@@ -265,7 +253,6 @@ class RandomWifePlugin(Star):
             yield event.plain_result("你今天还没有抽过老婆哦~")
             return
         
-        # 修改：从配置读取
         daily_limit = self.config.get("daily_limit", 3)
         result_text = f"你今天的老婆记录({len(user_records)}/{daily_limit})：\n"
         
@@ -291,12 +278,10 @@ class RandomWifePlugin(Star):
     @filter.command("抽老婆帮助", "老婆插件帮助")
     async def show_help(self, event: AstrMessageEvent):
         """显示插件帮助菜单"""
-        # 修改：从配置读取
         daily_limit = self.config.get("daily_limit", 3)
         excluded_count = len(self.config.get("excluded_users", []))
         
-        # 修改：更新帮助文本
-        help_text = f"""=== 抽老婆插件帮助 v1.3.0 ===
+        help_text = f"""=== 抽老婆插件帮助 v1.3.1 ===
         
 🎯 主要功能：
 • 今日老婆 / 抽老婆 - 随机抽取群友作为今日老婆（带头像和@）
