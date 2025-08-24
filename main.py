@@ -12,7 +12,7 @@ from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import Aioc
 import astrbot.api.message_components as Comp
 
 # 根据官方文档：开发者必须使用@register装饰器来注册插件，这是AstrBot识别和加载插件的必要条件
-@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v1.3.2", "https://github.com/astrbot-plugin-choulaopo")
+@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v1.3.3", "https://github.com/astrbot-plugin-choulaopo")
 class RandomWifePlugin(Star):
     """
     AstrBot随机抽老婆插件
@@ -33,10 +33,10 @@ class RandomWifePlugin(Star):
         根据官方文档：在__init__方法中会传入Context对象
         """
         super().__init__(context)
-        # 最终修正：通过 context.get_config("插件注册名") 来获取配置
-        self.config: AstrBotConfig = self.context.get_config("抽老婆")
+        # 最终最终修正：通过 context.get_config() 直接获取配置，无需参数
+        self.config: AstrBotConfig = self.context.get_config()
         
-        # 根据官方文档插件开发原则：持久化数据请存储于data目录下，而非插件自身目录
+        # 插件数据目录，建议使用一个固定的英文名
         self.data_dir = os.path.join("data", "plugins", "random_wife")
         self.records_file = os.path.join(self.data_dir, "wife_records.json")
         
@@ -281,7 +281,7 @@ class RandomWifePlugin(Star):
         daily_limit = self.config.get("daily_limit", 3)
         excluded_count = len(self.config.get("excluded_users", []))
         
-        help_text = f"""=== 抽老婆插件帮助 v1.3.2 ===
+        help_text = f"""=== 抽老婆插件帮助 v1.3.3 ===
         
 🎯 主要功能：
 • 今日老婆 / 抽老婆 - 随机抽取群友作为今日老婆（带头像和@）
