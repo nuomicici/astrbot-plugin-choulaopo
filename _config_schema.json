@@ -1,0 +1,12 @@
+{
+  "daily_limit": {
+    "type": "integer",
+    "description": "每位用户每日可抽取的次数上限",
+    "default": 3
+  },
+  "excluded_users": {
+    "type": "list",
+    "description": "要排除的用户QQ号列表（不会被抽中）",
+    "default": []
+  }
+}
