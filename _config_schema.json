@@ -1,14 +1,14 @@
 {
     "daily_limit": {
-        "type": "integer",
+        "type": "int",
         "title": "每日抽取上限",
         "description": "每位用户每天可以抽取老婆的次数上限。",
         "default": 3
     },
     "excluded_users": {
-        "type": "array",
+        "type": "list",  
         "title": "排除用户列表",
-        "description": "在此列表中的QQ号将不会被抽中或成为候选人。请每行填写一个QQ号。",
+        "description": "在此列表中的QQ号将不会被抽中。请每行填写一个QQ号。（建议添加BOT的QQ号）",
         "default": [],
         "items": {
             "type": "string"
