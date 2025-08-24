@@ -1,6 +1,6 @@
 ***
 
-# 随机抽老婆插件 v2.0.0
+# 随机抽老婆插件 v2.0
 （咳咳，AI生成的md）
 
 一个有趣而简单的 AstrBot 插件，允许群组成员每天随机抽取另一位群友作为他们的“今日老婆”。v2.0.0 版本经过了完全的重构，优化了代码结构，提升了运行效率和稳定性，并为未来的功能扩展打下了坚实的基础。
@@ -9,6 +9,9 @@
 [![License](https://img.shields.io/github/license/astrbot-plugin-choulaopo/astrbot-plugin-choulaopo?style=flat-square)](https://github.com/astrbot-plugin-choulaopo/blob/main/LICENSE)
 
 ---
+
+##  2.0.2 更新日志
+1. 修复了一点小bug，优化了插件指令判定
 
 ## ✨ v2.0.0 版本更新日志
 
