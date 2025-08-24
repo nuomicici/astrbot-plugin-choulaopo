@@ -165,12 +165,12 @@ class RandomWifePlugin(Star):
         avatar_url = f"https://q4.qlogo.cn/headimg_dl?dst_uin={wife_id}&spec=640"
         remaining = daily_limit - today_count - 1
         
-        chain = [Comp.At(qq=user_id), Comp.Plain(" 你的今日老婆是：\n"), Comp.Image.fromURL(avatar_url)]
+        chain = [Comp.At(qq=user_id), Comp.Plain(" 你的今日老婆是：\r\n"), Comp.Image.fromURL(avatar_url)]
         if with_at:
-            chain.extend([Comp.Plain("\n"), Comp.At(qq=wife_id), Comp.Plain(f" {wife_name}")])
+            chain.extend([Comp.Plain("\n"), Comp.At(qq=wife_id), Comp.Plain("\u3000\u3000\r\n")Comp.Plain(f" {wife_name}")])
         else:
             chain.append(Comp.Plain(f"\n{wife_name}"))
-        chain.append(Comp.Plain(f"\n剩余抽取次数：{remaining}次"))
+        chain.append(Comp.Plain(f"\r\n\u3000\u3000剩余抽取次数：{remaining}次"))
 
         yield event.chain_result(chain)
     
