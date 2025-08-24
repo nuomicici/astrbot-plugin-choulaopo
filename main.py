@@ -4,15 +4,13 @@ import random
 from datetime import datetime
 from typing import List, Dict, Any
 
-# 根据官方文档和参考插件导入必要的AstrBot API
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger, AstrBotConfig
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent
 import astrbot.api.message_components as Comp
 
-# 根据官方文档：开发者必须使用@register装饰器来注册插件，这是AstrBot识别和加载插件的必要条件
-@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v1.3.4", "https://github.com/astrbot-plugin-choulaopo")
+@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v2.0", "https://github.com/astrbot-plugin-choulaopo")
 class RandomWifePlugin(Star):
     """
     AstrBot随机抽老婆插件
@@ -26,16 +24,11 @@ class RandomWifePlugin(Star):
     7. 帮助菜单
     8. 输出被抽中成员的头像
     """
-    
-    def __init__(self, context: Context):
-        """
-        插件初始化方法
-        根据官方文档：在__init__方法中会传入Context对象
-        """
+    # 初始化插件，设置配置、数据目录并加载历史记录
+    def __init__(self, context: Context, config: AstrBotConfig):
         super().__init__(context)
-        self.config: AstrBotConfig = self.context.get_config()
+        self.config = config
         
-        # 插件数据目录，建议使用一个固定的英文名
         self.data_dir = os.path.join("data", "plugins", "random_wife")
         self.records_file = os.path.join(self.data_dir, "wife_records.json")
         
@@ -43,6 +36,7 @@ class RandomWifePlugin(Star):
         self.records = self._load_records()
         logger.info("随机抽老婆插件已加载")
         
+    # 从JSON文件加载抽取记录，如果文件不存在或加载失败则返回一个空的记录结构
     def _load_records(self) -> Dict[str, Any]:
         try:
             if os.path.exists(self.records_file):
@@ -53,6 +47,7 @@ class RandomWifePlugin(Star):
             logger.error(f"加载记录文件失败: {e}")
             return {"date": "", "groups": {}}
     
+    # 将当前的抽取记录以JSON格式保存到文件中
     def _save_records(self):
         try:
             with open(self.records_file, 'w', encoding='utf-8') as f:
@@ -60,16 +55,19 @@ class RandomWifePlugin(Star):
         except Exception as e:
             logger.error(f"保存记录文件失败: {e}")
     
+    # 检查当前日期是否与记录中的日期不同，用于判断是否是新的一天
     def _is_new_day(self) -> bool:
         today = datetime.now().strftime("%Y-%m-%d")
         return self.records.get("date") != today
     
+    # 重置每日的抽取记录，将日期更新为今天并清空所有群组的抽取数据
     def _reset_daily_records(self):
         today = datetime.now().strftime("%Y-%m-%d")
         self.records = {"date": today, "groups": {}}
         self._save_records()
         logger.info("每日抽取记录已重置")
     
+    # 异步获取事件所在群组的成员列表，目前仅支持aiocqhttp平台
     async def _get_group_members(self, event: AstrMessageEvent) -> List[Dict[str, Any]]:
         try:
             group_id = event.get_group_id()
@@ -89,6 +87,7 @@ class RandomWifePlugin(Star):
             logger.error(f"获取群成员失败: {e}")
             return []
     
+    # 获取指定用户在指定群组今天的已抽取次数，如果跨天则会自动重置记录
     def _get_today_count(self, group_id: str, user_id: str) -> int:
         if self._is_new_day():
             self._reset_daily_records()
@@ -97,6 +96,7 @@ class RandomWifePlugin(Star):
         group_records = self.records.get("groups", {}).get(group_id, {}).get("records", [])
         return sum(1 for record in group_records if record["user_id"] == user_id)
     
+    # 新增一条抽取记录，包含用户ID、老婆ID、老婆昵称、时间戳和是否@了对方
     def _add_record(self, group_id: str, user_id: str, wife_id: str, wife_name: str, with_at: bool):
         if self._is_new_day():
             self._reset_daily_records()
@@ -112,20 +112,20 @@ class RandomWifePlugin(Star):
         self._save_records()
         logger.info(f"用户{user_id}在群{group_id}抽取了{wife_name}({wife_id})")
     
+    # 处理“今日老婆”和“抽老婆”命令，调用通用抽取方法并启用@功能
     @filter.command("今日老婆", "抽老婆")
     async def draw_wife_with_at(self, event: AstrMessageEvent):
-        """抽取今日老婆（带@功能）"""
         async for result in self._draw_wife_common(event, with_at=True):
             yield result
     
-    @filter.command("抽老婆-@","今日老婆-@")
+    # 处理“抽老婆-@”和“今日老婆-@”命令，调用通用抽取方法并禁用@功能
+    @filter.command("抽老婆-@", "今日老婆-@")
     async def draw_wife_without_at(self, event: AstrMessageEvent):
-        """抽取今日老婆（不带@功能）"""
         async for result in self._draw_wife_common(event, with_at=False):
             yield result
     
+    # 抽取老婆的核心通用逻辑，处理包括环境检查、次数限制、成员获取、随机选择和结果发送等步骤
     async def _draw_wife_common(self, event: AstrMessageEvent, with_at: bool):
-        """抽取老婆的通用方法"""
         if event.is_private_chat():
             yield event.plain_result("抽老婆功能仅在群聊中可用哦~")
             return
@@ -175,9 +175,9 @@ class RandomWifePlugin(Star):
 
         yield event.chain_result(chain)
     
+    # 处理“我的老婆”和“抽取历史”命令，显示用户当天的抽取记录列表
     @filter.command("我的老婆", "抽取历史")
     async def show_my_wives(self, event: AstrMessageEvent):
-        """显示用户的抽取历史"""
         if event.is_private_chat():
             yield event.plain_result("此功能仅在群聊中可用")
             return
@@ -208,12 +208,14 @@ class RandomWifePlugin(Star):
         result.append(f"剩余次数：{remaining}次")
         yield event.plain_result("\n".join(result))
     
+    # 处理“重置记录”命令，仅管理员可用，用于手动清空当天的所有抽取记录
     @filter.permission_type(filter.PermissionType.ADMIN)
     @filter.command("重置记录")
     async def reset_records(self, event: AstrMessageEvent):
         self._reset_daily_records()
         yield event.plain_result("今日抽取记录已重置！")
     
+    # 处理“抽老婆帮助”和“老婆插件帮助”命令，显示插件的功能、命令、说明和当前配置
     @filter.command("抽老婆帮助", "老婆插件帮助")
     async def show_help(self, event: AstrMessageEvent):
         daily_limit = self.config.get("daily_limit", 3)
@@ -221,9 +223,7 @@ class RandomWifePlugin(Star):
         help_text = f"""=== 抽老婆插件帮助 v1.3.4 ===
         
 🎯 主要功能：
-• 今日老婆 / 抽老婆 - 随机抽取群友作为今日老婆（带头像和@）
-• 抽老婆-@ - 随机抽取群友（带头像，不带@）
-• 我的老婆 / 抽取历史 - 查看今天的抽取记录
+• 今日老婆 / 抽老婆 - 随机抽取群友作为今日老婆。可直接在命令后添加“-@”选择不@抽取（不要添加空格！）
 • 重置记录 - 管理员专用，重置今日记录
 
 📝 使用说明：
@@ -240,6 +240,7 @@ class RandomWifePlugin(Star):
 💡 提示：插件数据保存在data目录下，支持持久化存储"""
         yield event.plain_result(help_text)
     
+    # 在插件终止时调用，确保将最新的记录保存到文件，防止数据丢失
     async def terminate(self):
         try:
             self._save_records()
