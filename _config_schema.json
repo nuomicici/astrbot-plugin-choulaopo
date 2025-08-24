@@ -1,24 +1,17 @@
 {
-    "title": "抽老婆插件配置",
-    "description": "配置随机抽老婆插件的各项参数",
-    "type": "object",
-    "properties": {
-        "daily_limit": {
-            "type": "integer",
-            "title": "每日抽取上限",
-            "description": "设置每个用户每天可以抽老婆的次数。",
-            "default": 3,
-            "minimum": 1
-        },
-        "excluded_users": {
-            "type": "array",
-            "title": "排除用户列表",
-            "description": "在此处添加不希望被抽中的用户QQ号列表（字符串格式）。",
-            "default": [],
-            "items": {
-                "type": "string",
-                "title": "QQ号"
-            }
+    "daily_limit": {
+        "type": "integer",
+        "title": "每日抽取上限",
+        "description": "每位用户每天可以抽取老婆的次数上限。",
+        "default": 3
+    },
+    "excluded_users": {
+        "type": "array",
+        "title": "排除用户列表",
+        "description": "在此列表中的QQ号将不会被抽中或成为候选人。请每行填写一个QQ号。",
+        "default": [],
+        "items": {
+            "type": "string"
         }
     }
 }
