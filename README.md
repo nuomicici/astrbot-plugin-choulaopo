@@ -45,11 +45,11 @@
 
 1. 在插件市场搜索“抽老婆”或“糯米茨”即可安装
 2. 或者可以直接克隆源码到插件文件夹：
-`
+```
 cd /AstrBot/data/plugins
 git clone https://github.com/nuomicici/astrbot-plugin-choulaopo/
 # 控制台重启AstrBot
-`
+```
 
 ### 配置
 
