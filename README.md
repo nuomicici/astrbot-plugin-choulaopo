@@ -1,8 +1,9 @@
-<div align="center">
-![Visitor Count](https://count.getloli.com/@astrbot-plugin-choulaopo?name=astrbot-plugin-choulaopo?theme=minecraft&padding=4&offset=0&align=top&scale=1&pixelated=1&darkmode=auto)  
-# 随机抽老婆插件 v2.0.3
+<div align="center" style="display: flex;">
+<img style="width:70%" src="https://count.getloli.com/@astrbot-plugin-choulaopo?name=astrbot-plugin-choulaopo&theme=gelbooru&padding=5&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name">
 
+# 随机抽老婆插件 v2.0.3
 一个有趣而简单的 AstrBot 插件，允许群组成员每天随机抽取另一位群友作为他们的“今日老婆”。v2.0.0 版本经过了完全的重构，优化了代码结构，提升了运行效率和稳定性，并为未来的功能扩展打下了坚实的基础。
+
 
 [![GitHub](https://img.shields.io/badge/GitHub-astrbot--plugin--choulaopo-blue?style=flat-square&logo=github)](https://github.com/astrbot-plugin-choulaopo)
 [![License](https://img.shields.io/github/license/nuomicici/astrbot-plugin-choulaopo?style=flat-square)](https://github.com/nuomicici/astrbot-plugin-choulaopo/blob/main/LICENSE)
