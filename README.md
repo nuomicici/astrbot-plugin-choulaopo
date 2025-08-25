@@ -1,4 +1,4 @@
-***
+![visitors](https://visitor-badge.glitch.me/badge?page_id=nuomicici.astrbot-plugin-choulaopo)
 
 # 随机抽老婆插件 v2.0.3
 
