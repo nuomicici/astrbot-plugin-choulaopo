@@ -1,4 +1,4 @@
-<div align="center" style="display: flex;">
+<div align="center">
 <img style="width:70%" src="https://count.getloli.com/@astrbot-plugin-choulaopo?name=astrbot-plugin-choulaopo&theme=gelbooru&padding=5&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name">
 
 # 随机抽老婆插件 v2.0.4
