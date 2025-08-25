@@ -1,4 +1,4 @@
-![Visitors](https://visitor-badge.glitch.me/badge?page_id=nuomicici.astrbot-plugin-choulaopo)
+![Visitor Count](https://komarev.com/ghpvc/?username=nuomicici&repo=astrbot-plugin-choulaopo&color=blue)
 # 随机抽老婆插件 v2.0.3
 
 一个有趣而简单的 AstrBot 插件，允许群组成员每天随机抽取另一位群友作为他们的“今日老婆”。v2.0.0 版本经过了完全的重构，优化了代码结构，提升了运行效率和稳定性，并为未来的功能扩展打下了坚实的基础。
