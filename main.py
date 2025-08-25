@@ -229,7 +229,7 @@ class RandomWifePlugin(Star):
     
     @filter.command("抽老婆帮助" , alias={'今日老婆帮助'})
     async def show_help(self, event: AstrMessageEvent):
-        """显示帮助，别名"今日老婆帮助""""
+        """显示帮助，别名“今日老婆帮助”"""
         daily_limit = self.config.get("daily_limit", 3)
         excluded_count = len(self.config.get("excluded_users", []))
         help_text = f"""=== 抽老婆帮助 v2.0.3 ===
