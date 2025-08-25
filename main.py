@@ -9,7 +9,7 @@ from astrbot.api import logger, AstrBotConfig
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent 
 import astrbot.api.message_components as Comp
 
-@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v2.0.3", "https://github.com/astrbot-plugin-choulaopo")
+@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v2.0.4", "https://github.com/astrbot-plugin-choulaopo")
 class RandomWifePlugin(Star):
     """
     AstrBot随机抽老婆插件
@@ -236,10 +236,14 @@ class RandomWifePlugin(Star):
         
 🎯 主要功能：
 • 今日老婆 / 抽老婆 - 随机抽取群友作为今日老婆（带@）
-• 抽老婆-@ / 今日老婆-@ - 随机抽取群友（不带@）
-• 我的老婆 / 抽取历史 - 查看今天的抽取记录
-• 重置记录 - 管理员专用，重置今日记录
-• 抽老婆帮助 / 今日老婆帮助 - 查看该帮助
+• 抽老婆-@ / 今日老婆-@
+   - 随机抽取群友（不带@）
+• 我的老婆 / 抽取历史 
+   - 查看今天的抽取记录
+• 重置记录
+   - 管理员专用，重置今日记录
+• 抽老婆帮助 / 今日老婆帮助
+   - 查看该帮助
 
 📝 使用说明：
 • 每人每日可抽取 {daily_limit} 次
