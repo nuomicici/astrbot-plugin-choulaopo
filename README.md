@@ -48,7 +48,8 @@
 `
 cd /AstrBot/data/plugins
 git clone https://github.com/nuomicici/astrbot-plugin-choulaopo/
-# 控制台重启AstrBot`
+# 控制台重启AstrBot
+`
 
 ### 配置
 
