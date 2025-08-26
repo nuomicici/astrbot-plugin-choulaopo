@@ -6,8 +6,10 @@
 
 
 [![GitHub](https://img.shields.io/badge/GitHub-astrbot--plugin--choulaopo-blue?style=flat-square&logo=github)](https://github.com/astrbot-plugin-choulaopo)
-[![License](https://img.shields.io/github/license/nuomicici/astrbot-plugin-choulaopo?style=flat-square)](https://github.com/nuomicici/astrbot-plugin-choulaopo/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/nuomicici/astrbot-plugin-choulaopo?style=flat-square)](https://github.com/nuomicici/astrbot-plugin-choulaopo/blob/main/LICENSE)  
+[QQ群](https://qm.qq.com/q/r20HdxCvBe)忘了该怎么写那个卡片了将就着用吧，有bug啥的都可以来
 </div>
+
 
 ---
 ## 2.0.4 更新日志
