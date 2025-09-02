@@ -2,7 +2,7 @@
 <img style="width:70%" src="https://count.getloli.com/@astrbot-plugin-choulaopo?name=astrbot-plugin-choulaopo&theme=gelbooru&padding=5&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name">
 
 # 随机抽老婆插件 v2.0.4
-一个有趣而简单的 AstrBot 插件，允许群组成员每天随机抽取另一位群友作为他们的“今日老婆”。v2.0.0 版本经过了完全的重构，优化了代码结构，提升了运行效率和稳定性，并为未来的功能扩展打下了坚实的基础。
+一个简单的 AstrBot 插件，允许群组成员每天随机抽取另一位群友作为他们的“今日老婆”。v2.0.0 版本经过了完全的重构，优化了代码结构，提升了运行效率和稳定性，并为未来的功能扩展打下了坚实的基础。
 
 
 [![GitHub](https://img.shields.io/badge/GitHub-astrbot--plugin--choulaopo-blue?style=flat-square&logo=github)](https://github.com/astrbot-plugin-choulaopo)
@@ -12,6 +12,9 @@
 
 
 ---
+## 2.0.5 更新日志
+1. 更新文件名没被记录，现在下载之后那个配置文件名字还是错的，烦的嘞……
+
 ## 2.0.4 更新日志
 1. 优化了“抽老婆帮助”命令回复的视觉效果
 
