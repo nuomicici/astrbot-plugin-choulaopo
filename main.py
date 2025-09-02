@@ -232,7 +232,7 @@ class RandomWifePlugin(Star):
         """显示帮助，别名“今日老婆帮助”"""
         daily_limit = self.config.get("daily_limit", 3)
         excluded_count = len(self.config.get("excluded_users", []))
-        help_text = f"""=== 抽老婆帮助 v2.0.4 ===
+        help_text = f"""=== 抽老婆帮助 v2.0.5 ===
         
 🎯 主要功能：
 • 今日老婆 / 抽老婆 - 随机抽取群友作为今日老婆（带@）
