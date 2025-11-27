@@ -9,7 +9,6 @@ from astrbot.api import logger, AstrBotConfig
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent 
 import astrbot.api.message_components as Comp
 
-@register("抽老婆", "糯米茨", "随机抽老婆插件 - 每日抽取群友作为老婆", "v2.0.4", "https://github.com/astrbot-plugin-choulaopo")
 class RandomWifePlugin(Star):
     """
     AstrBot随机抽老婆插件
@@ -166,7 +165,7 @@ class RandomWifePlugin(Star):
         text_content = f" 你的今日老婆是：\n"
 
         if with_at:
-            wife_info_text = f"."
+            wife_info_text = f"\200b"
         else:
             wife_info_text = f"\n{wife_name}"
 
