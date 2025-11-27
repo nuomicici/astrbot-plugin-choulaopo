@@ -1,7 +1,7 @@
 <div align="center">
 <img style="width:70%" src="https://count.getloli.com/@astrbot-plugin-choulaopo?name=astrbot-plugin-choulaopo&theme=gelbooru&padding=5&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name">
 
-# 随机抽老婆插件 v2.0.5
+# 随机抽老婆插件 v2.0.6
 一个简单的 AstrBot 插件，允许群组成员每天随机抽取另一位群友作为他们的“今日老婆”。v2.0.0 版本经过了完全的重构，优化了代码结构，提升了运行效率和稳定性，并为未来的功能扩展打下了坚实的基础。
 
 
@@ -12,6 +12,9 @@
 
 
 ---
+## 2.0.6
+1. 修复了一些已知问题（就是之前的@后面必须加个点才能换行现在解决掉了
+
 ## 2.0.5 更新日志
 1. 更新文件名没被记录，现在下载之后那个配置文件名字还是错的，烦的嘞……
 
