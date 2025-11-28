@@ -165,7 +165,7 @@ class RandomWifePlugin(Star):
         text_content = f" 你的今日老婆是：\n"
 
         if with_at:
-            wife_info_text = f"\200b"
+            wife_info_text = f"\u200b"
         else:
             wife_info_text = f"\n{wife_name}"
 
