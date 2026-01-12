@@ -90,10 +90,4 @@ _✨ 随机抽老婆插件 ✨_
 
 ## 💾 数据存储
 
-插件的数据（每日抽取记录）存储在 `data/plugins/random_wife/wife_records.json` 文件中。每日记录会在第二天第一次触发插件时自动重置。
-
-## 📜 开源许可
-
-本插件使用 [MIT License](https://opensource.org/licenses/MIT) 开源。
-
-## [帮助文档](https://docs.astrbot.app/)
+插件的数据（每日抽取记录）存储在 `data/plugin_data/wife_records.json` 文件中。每日记录会在第二天第一次触发插件时自动重置。
