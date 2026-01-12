@@ -23,7 +23,9 @@ class RandomWifePlugin(Star):
         super().__init__(context)
         self.cfg = config
         self.daily_limit = config["daily_limit"]
-        self.excluded_users = set(config["excluded_users"])
+        self.excluded_users = self.excluded_users = {
+            str(u) for u in config.get("excluded_users", [])
+        }
 
         self.data_dir = StarTools.get_data_dir()
         self.store = WifeRecordStore(self.data_dir)
@@ -93,7 +95,6 @@ class RandomWifePlugin(Star):
 
         yield event.chain_result(chain)
 
-
     @filter.event_message_type(filter.EventMessageType.GROUP_MESSAGE)
     @filter.command("我的老婆", alias={"抽取历史"})
     async def show_my_wives(self, event: AstrMessageEvent):
@@ -108,13 +109,10 @@ class RandomWifePlugin(Star):
 
         for i, record in enumerate(records, 1):
             time_str = record.timestamp.strftime("%H:%M:%S")
-            lines.append(
-                f"{i}. {record.wife_name} ({record.wife_id}) {time_str}"
-            )
+            lines.append(f"{i}. {record.wife_name} ({record.wife_id}) {time_str}")
 
         lines.append(f"剩余次数：{self.daily_limit - len(records)}次")
         yield event.plain_result("\n".join(lines))
-
 
     @filter.permission_type(filter.PermissionType.ADMIN)
     @filter.command("重置记录")
