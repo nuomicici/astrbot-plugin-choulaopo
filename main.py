@@ -11,7 +11,7 @@ from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import (
 from astrbot.core.star.star_tools import StarTools
 
 from .data import WifeRecord, WifeRecordStore
-from .utils import HELP_TEXT_TEMPLATE, get_ats, get_group_members
+from .utils import HELP_TEXT_TEMPLATE, get_group_members
 
 
 class RandomWifePlugin(Star):
@@ -35,12 +35,11 @@ class RandomWifePlugin(Star):
 
     @filter.event_message_type(filter.EventMessageType.GROUP_MESSAGE)
     @filter.command("抽老婆", alias={"今日老婆"})
-    async def wife_smacking(self, event: AiocqhttpMessageEvent):
+    async def wife_smacking(self, event: AiocqhttpMessageEvent, need_at: bool | str = ""):
         """从群里随机抽取一位老婆"""
         user_id = event.get_sender_id()
         group_id = event.get_group_id()
         bot_id = event.get_self_id()
-        at_ids = get_ats(event)
         today_count = self.store.get_user_today_count(group_id, user_id)
 
         if today_count >= self.daily_limit:
@@ -83,7 +82,7 @@ class RandomWifePlugin(Star):
             Image.fromURL(avatar_url),
         ]
 
-        if at_ids:
+        if need_at:
             chain.extend(
                 [
                     At(qq=wife_id),

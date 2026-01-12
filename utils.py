@@ -1,6 +1,5 @@
 
 from astrbot.api import logger
-from astrbot.core.message.components import At
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import (
     AiocqhttpMessageEvent,
 )
@@ -39,13 +38,4 @@ async def get_group_members(event: AiocqhttpMessageEvent) -> list[dict]:
     except Exception as e:
         logger.error(f"获取群成员失败: {e}")
         return []
-
-
-def get_ats(event: AiocqhttpMessageEvent) -> list[str]:
-    """获取被at者们的id列表,(@增强版)"""
-    ats = [str(seg.qq) for seg in event.get_messages()[1:] if isinstance(seg, At)]
-    for arg in event.message_str.split(" "):
-        if arg.startswith("@") and arg[1:].isdigit():
-            ats.append(arg[1:])
-    return ats
 
